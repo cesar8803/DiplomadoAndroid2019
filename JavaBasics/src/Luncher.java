@@ -25,7 +25,6 @@ public class Luncher {
         System.out.println(saludoManuel);
 
 
-
         Persona christian = new Persona();
 
         christian.setNombre("Christian");
