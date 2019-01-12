@@ -12,7 +12,7 @@ public class Persona {
     // Declaración de un metodo (Representa una acción o comportamiento de una clase/ objeto)
     public String quienSoy(){
 
-            return "Hola mi nombre es: "+nombre;
+            return "Hola mi nombre y edad es: " + nombre + edad;
     }
 
     public String getNombre() {
