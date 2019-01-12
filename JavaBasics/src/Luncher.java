@@ -37,24 +37,6 @@ public class Luncher {
 
         System.out.println(saludoChris);
 
-        Estudiante eduardo = new Estudiante();
-
-        eduardo.setNombre("Eduardo");
-        eduardo.setEdad(38);
-        eduardo.setEstatura(1.69);
-        eduardo.setGenero(true);
-        eduardo.setPeso(75);
-        eduardo.setMatricula(12345678);
-        eduardo.setEscuela("UVM");
-        GradoEstudio gradoEstudio = new GradoEstudio(4,8);
-        eduardo.setGradoEstudio(gradoEstudio);
-
-
-        String saludoLalo = eduardo.quienSoy();
-
-        System.out.println(saludoLalo);
-
-
 
     }
 
