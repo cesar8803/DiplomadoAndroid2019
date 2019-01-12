@@ -38,6 +38,21 @@ public class Luncher {
         System.out.println(saludoChris);
 
 
+
+        Estudiante eduardo = new Estudiante();
+
+
+        eduardo.setNombre("Eduardo");
+        eduardo.setEdad(38);
+        eduardo.setEstatura(1.69);
+        eduardo.setGenero(true);
+        eduardo.setPeso(75);
+        String saludoEduardo = eduardo.quienSoy();
+
+        System.out.println(saludoEduardo);
+
+
+
     }
 
 }
