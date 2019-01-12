@@ -54,9 +54,16 @@ public class Luncher {
 
 
 
+
         String saludoEduardo = eduardo.quienSoy();
 
-        System.out.println(saludoEduardo);
+        System.out.println(saludoEduardo+ " mi evaluación es: "+eduardo.evalua());
+
+
+        Restaurante bellinis = new Restaurante();
+        bellinis.setNombre("Bellinis");
+
+        System.out.println(bellinis.getNombre()+ " la evaluación es: "+bellinis.evalua());
 
 
 

@@ -1,4 +1,6 @@
-public class Estudiante extends Persona{
+import java.util.Random;
+
+public class Estudiante extends Persona implements  Evaluable{
 
 
     private int matricula;
@@ -27,5 +29,14 @@ public class Estudiante extends Persona{
 
     public void setEscuela(String escuela) {
         this.escuela = escuela;
+    }
+
+    @Override
+    public int evalua() {
+
+        Random rn = new Random();
+        int answer = rn.nextInt(10) + 1;
+
+        return answer;
     }
 }
