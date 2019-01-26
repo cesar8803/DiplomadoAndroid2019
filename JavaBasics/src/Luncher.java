@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Luncher {
 
 
@@ -86,11 +88,39 @@ public class Luncher {
         System.out.println(saludoFernando+ " las materias que paso fernando son: "+fernando.estudiaMaterias(8));
 
 
+        ArrayList<Persona> grupodepersonas = new ArrayList<>();
+
+        grupodepersonas.add(manuel);
+        grupodepersonas.add(christian);
+        grupodepersonas.add(eduardo);
+        grupodepersonas.add(fernando);
 
 
+        System.out.println("--------------------------------------");
 
 
+        for(Persona personaActual : grupodepersonas){
 
+
+            String saludoPersona = personaActual.quienSoy();
+            System.out.println(saludoPersona);
+
+
+            try{
+
+                //Aqui el polimorfismo
+                System.out.println("Mi evaluación es: "+((Evaluable) personaActual).evalua());
+
+            }catch (Exception e){
+
+                System.out.println("La persona: "+personaActual.getNombre()+ " no se puede evaluar ");
+                System.out.println("La causa: "+e.getLocalizedMessage());
+
+
+            }
+
+
+        }
 
 
 
