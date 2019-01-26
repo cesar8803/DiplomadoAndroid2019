@@ -6,6 +6,7 @@ public class Estudiante extends Persona implements  Evaluable{
     private int matricula;
     private GradoEstudio gradoEstudio;
     private String escuela;
+    private String segmento;
 
     public int getMatricula() {
         return matricula;
@@ -39,4 +40,14 @@ public class Estudiante extends Persona implements  Evaluable{
 
         return answer;
     }
+
+
+    public int estudiaMaterias(int numberTotalMaterias){
+        Random rn = new Random();
+        int answer = rn.nextInt(numberTotalMaterias/2) + (int) numberTotalMaterias/2;
+        return answer;
+    }
+
+
+
 }

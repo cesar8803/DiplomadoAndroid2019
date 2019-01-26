@@ -58,12 +58,39 @@ public class Luncher {
         String saludoEduardo = eduardo.quienSoy();
 
         System.out.println(saludoEduardo+ " mi evaluación es: "+eduardo.evalua());
+        System.out.println(saludoEduardo+ " las materias que paso eduardo son: "+eduardo.estudiaMaterias(8));
 
 
         Restaurante bellinis = new Restaurante();
         bellinis.setNombre("Bellinis");
 
         System.out.println(bellinis.getNombre()+ " la evaluación es: "+bellinis.evalua());
+
+
+
+
+        EstudianteMatematicas fernando = new EstudianteMatematicas();
+        fernando.setNombre("Fernando");
+        fernando.setEdad(38);
+        fernando.setEstatura(1.69);
+        fernando.setGenero(true);
+        fernando.setPeso(75);
+        fernando.setMatricula(12345678);
+        fernando.setEscuela("UVM");
+        GradoEstudio gradoEstudioFer = new GradoEstudio(4,8);
+        fernando.setGradoEstudio(gradoEstudioFer);
+
+        String saludoFernando = fernando.quienSoy();
+
+        System.out.println(saludoFernando+ " mi evaluación es: "+fernando.evalua());
+        System.out.println(saludoFernando+ " las materias que paso fernando son: "+fernando.estudiaMaterias(8));
+
+
+
+
+
+
+
 
 
 
