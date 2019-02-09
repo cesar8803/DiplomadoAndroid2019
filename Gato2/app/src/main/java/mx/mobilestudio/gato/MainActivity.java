@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+
+
         switch (view.getId()){
 
             case R.id.button1:
@@ -140,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ((Button)view).setText("X");
                 tablero[X][Y] = 'X';
                 contador++;
+                buscarGanador();
             }else {
                 Toast.makeText(this,"Elige otra casilla", Toast.LENGTH_LONG).show();
             }
@@ -150,14 +153,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (((Button)view).getText().toString().isEmpty()) {
 
                 ((Button) view).setText("O");
-                tablero[X][Y] = 'Y';
+                tablero[X][Y] = 'O';
                 contador++;
-
+                buscarGanador();
 
             }else {
                 Toast.makeText(this,"Elige otra casilla", Toast.LENGTH_LONG).show();
             }
 
         }
+    }
+
+
+    public void buscarGanador(){
+
+        //[ij]
+
+        //[00,01,02]
+        //[10,11,12]
+        //[20,21,22]
+        int contadorGanarHorizontalX = 0;
+        int contadorGanarHorizontalY = 0;
+
+        for (int i=0 ; i<3 ; i++ ){
+
+            for (int j=0 ; j<3 ; j++ ){
+                //TODO investigar ++ J
+
+                if(tablero[i][j] == 'X' ){
+                    contadorGanarHorizontalX++;
+                    if(contadorGanarHorizontalX==3){
+                        Toast.makeText(this, "Hay un Ganador X",Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                if (tablero[i][j] == 'O'){
+                    contadorGanarHorizontalY++;
+                    if(contadorGanarHorizontalY==3) {
+                        Toast.makeText(this, "Hay un Ganador O",Toast.LENGTH_LONG).show();
+
+                    }
+
+
+                }
+
+            }
+            contadorGanarHorizontalX =0;
+            contadorGanarHorizontalY =0;
+
+        }
+
+
+
     }
 }
