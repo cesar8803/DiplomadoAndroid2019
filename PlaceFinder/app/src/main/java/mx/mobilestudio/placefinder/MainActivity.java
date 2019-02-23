@@ -14,6 +14,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+
+import mx.mobilestudio.placefinder.model.ApiFourSquareResponse;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener , Response.Listener , Response.ErrorListener {
 
@@ -93,7 +96,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public void onResponse(Object response) {
 
-        Toast.makeText(this, response.toString(), Toast.LENGTH_SHORT).show();
-        
+        Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show();
+
+        Gson gson = new Gson();
+
+        ApiFourSquareResponse apiFourSquareResponse = gson.fromJson((String) response, ApiFourSquareResponse.class);
+
+
+        Toast.makeText(this,  apiFourSquareResponse.response.venues.get(0).name, Toast.LENGTH_LONG).show();
+        Toast.makeText(this,  String.valueOf(apiFourSquareResponse.response.venues.get(0).location.lat), Toast.LENGTH_LONG).show();
+        Toast.makeText(this,  String.valueOf(apiFourSquareResponse.response.venues.get(0).location.lng), Toast.LENGTH_LONG).show();
+
+
     }
 }
