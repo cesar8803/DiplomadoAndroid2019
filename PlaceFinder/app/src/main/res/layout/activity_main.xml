@@ -29,6 +29,14 @@
                     android:textSize="20sp"/>
 
 
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    android:id="@+id/mybuttonmap"
+                    android:src="@android:drawable/ic_dialog_map"
+                    android:layout_alignParentRight="true"/>
+
+
             </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
@@ -64,10 +72,13 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/main_container">
+        android:id="@+id/main_container"
+        android:layout_below="@+id/tab_button_containers">
 
 
         <!-- Aqui van los Fragmentos del Mapa y la Lista -->
+
+
 
     </RelativeLayout>
 
