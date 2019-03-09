@@ -1,12 +1,16 @@
 package mx.mobilestudio.placefinder;
 
-
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -17,110 +21,170 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
-import mx.mobilestudio.placefinder.model.ApiFourSquareResponse;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, Response.Listener, Response.ErrorListener {
+import mx.mobilestudio.placefinder.fragment.ListResultFragment;
+import mx.mobilestudio.placefinder.fragment.MapsResultsFragment;
+import mx.mobilestudio.placefinder.model.ApiFourSquareResponse;
+import mx.mobilestudio.placefinder.model.Location;
+import mx.mobilestudio.placefinder.model.Venue;
+
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener , Response.Listener , Response.ErrorListener, View.OnClickListener {
 
     public SearchView searchView;
+    public ImageButton imageButtonMap;
+
+    public ArrayList<Venue> venues; //Variable que se agrega para para cachar el arreglo de name
+    public ArrayList<Location> locations;
+
+
+    private FragmentManager fragmentManager; // Clase que me permite agregar fragmentos a mi Activity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        configureToolbar();
+        imageButtonMap = findViewById(R.id.mybuttonmap);
+        imageButtonMap.setOnClickListener(this);
+// Inicializamos fragment manager
+        fragmentManager = getFragmentManager();
+
+
+        configureToolBar();
     }
 
-    public void configureToolbar(){
+
+    public void configureToolBar(){
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-
-        //Método que llamámos setSupportActionBar para configurar el Toolbar
-
+        //Metodo que llamamos setActionBar para poder configurar el ToolBar
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
 
-
-        //actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_add);
-        //actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_agenda);
-        //actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_gallery);
-        actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_view);
+        actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_add);
 
         searchView = findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(this);
 
+
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-
     }
+
 
     @Override
     public boolean onQueryTextSubmit(String query) {
 
-        //Toast.makeText(this, query, Toast.LENGTH_LONG).show(); *probar*
+        //Toast.makeText(this, query, Toast.LENGTH_LONG).show();
 
-        callFourSquareApi(query); //Se llama al método cuando el usuario lo busca
+        callFourSquareApi(query);
         return false;
     }
 
     @Override
+    public boolean onQueryTextChange(String newText) {
 
 
-    public boolean onQueryTextChange(String newText) { //Se borra por cada vez que cambia algo
-
-        Toast.makeText(this, newText, Toast.LENGTH_LONG).show();
         return false;
     }
 
-    //Se agrega la localización
-    public void callFourSquareApi(String query)
-    {
-        String location = "19.395209"+","+"-99.1544203"; //HARDCODE
 
-        RequestQueue queue = Volley.newRequestQueue(this); //Se inicializa la Queue de respuesta descomponiendo la petición
+    public void callFourSquareApi(String query){
+
+        String location = "19.395209"+","+"-99.1544203"; // HARDCODE
+
+        RequestQueue queue = Volley.newRequestQueue(this);
 
         String URL = Uri.parse("https://api.foursquare.com/v2/venues/search").buildUpon()
-                .appendQueryParameter("client_id","HOSIY11XMXHWFADXIPQTF5HRZA3YIWIFGRAOA5NIGXOY3CWI")
-                .appendQueryParameter("client_secret","OGATJNY0E0JY15PRXYD5MQ2WW3EMFLRAWFHLAOQYSTMVKMHM")
-                .appendQueryParameter("v","20130815")
-                .appendQueryParameter("ll","19.433997,-99.146006")
-                .appendQueryParameter("query",query).build().toString();
+                     .appendQueryParameter("client_id","HOSIY11XMXHWFADXIPQTF5HRZA3YIWIFGRAOA5NIGXOY3CWI")
+                     .appendQueryParameter("client_secret","OGATJNY0E0JY15PRXYD5MQ2WW3EMFLRAWFHLAOQYSTMVKMHM")
+                     .appendQueryParameter("v","20130815")
+                     .appendQueryParameter("ll","19.433997,-99.146006")
+                     .appendQueryParameter("query",query).build().toString();
 
 
-//Petición, ya que el Json regresa un texto
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, this, this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL ,this,this);
 
-        //Ejecución del Request
 
         queue.add(stringRequest);
 
-
     }
 
     @Override
-    public void onErrorResponse(VolleyError error) { //Si falla puede mostrarse un mensaje vacio por Default
-        Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
-
+    public void onErrorResponse(VolleyError error) {
+        Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onResponse(Object response) {
 
-        Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show(); // Tiempo en el cuál se visualiza el mensaje Length Short
-
+        Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show();
 
         Gson gson = new Gson();
 
         ApiFourSquareResponse apiFourSquareResponse = gson.fromJson((String) response, ApiFourSquareResponse.class);
 
-        Toast.makeText(this, apiFourSquareResponse.response.venues.get(0).name, Toast.LENGTH_LONG).show();
-        Toast.makeText(this, String.valueOf(apiFourSquareResponse.response.venues.get(0).location.lat), Toast.LENGTH_LONG).show();
-        Toast.makeText(this, String.valueOf(apiFourSquareResponse.response.venues.get(0).location.lng), Toast.LENGTH_LONG).show();
+
+        venues = apiFourSquareResponse.response.venues;
+
+        Toast.makeText(this,  apiFourSquareResponse.response.venues.get(0).name, Toast.LENGTH_LONG).show();
+        Toast.makeText(this,  String.valueOf(apiFourSquareResponse.response.venues.get(0).location.lat), Toast.LENGTH_LONG).show();
+        Toast.makeText(this,  String.valueOf(apiFourSquareResponse.response.venues.get(0).location.lng), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, String.valueOf(apiFourSquareResponse.response.venues.get(0).location.city), Toast.LENGTH_LONG).show();
+
+
+       attachListFragment();
+        //attachMapFragment();
+    }
 
 
 
+    // Generamos un metodo para agregar (attachar) nuestros Fragmento Lista
+    public void attachListFragment(){
 
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment listResultFragment = new ListResultFragment();
+
+
+        ((ListResultFragment) listResultFragment).setVenues(venues); //Se adiciona para atrapar el Json
+        ((ListResultFragment) listResultFragment).setLocations(locations);
+
+
+        fragmentTransaction.replace(R.id.main_container, listResultFragment);  // Aqui es donde colocamos el fragmento
+
+        fragmentTransaction.commit();
+    }
+
+
+    // Generamos un metodo para agregar (attachar) nuestros Fragmento Mapa
+    public void attachMapFragment(){
+       /// MapsResultsFragment
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment mapsResultsFragment = new MapsResultsFragment();
+
+        fragmentTransaction.replace(R.id.main_container, mapsResultsFragment);  // Aqui es donde colocamos el fragmento
+
+        fragmentTransaction.commit();
+    }
+
+
+    @Override
+    public void onClick(View view) {
+
+
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.main_container);
+
+        if( currentFragment instanceof  MapsResultsFragment){
+            attachListFragment();
+            imageButtonMap.setBackgroundResource(android.R.drawable.btn_default);
+
+        }else if ( currentFragment instanceof  ListResultFragment){
+            attachMapFragment();
+            imageButtonMap.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+
+        }
 
 
     }

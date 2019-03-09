@@ -4,5 +4,4 @@ public class ApiFourSquareResponse {
 
     public Meta meta;
     public Response response;
-
 }
