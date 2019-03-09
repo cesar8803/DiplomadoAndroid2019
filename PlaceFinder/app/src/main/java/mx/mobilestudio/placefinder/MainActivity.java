@@ -21,14 +21,19 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 import mx.mobilestudio.placefinder.fragment.ListResultFragment;
 import mx.mobilestudio.placefinder.fragment.MapsResultsFragment;
 import mx.mobilestudio.placefinder.model.ApiFourSquareResponse;
+import mx.mobilestudio.placefinder.model.Venue;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener , Response.Listener , Response.ErrorListener, View.OnClickListener {
 
     public SearchView searchView;
     public ImageButton imageButtonMap;
+
+    public ArrayList<Venue> venues;
 
     private FragmentManager fragmentManager; // Clase que me permite agregar fragmentos a mi Activity
 
@@ -119,22 +124,26 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         ApiFourSquareResponse apiFourSquareResponse = gson.fromJson((String) response, ApiFourSquareResponse.class);
 
 
+        venues = apiFourSquareResponse.response.venues;
+
         Toast.makeText(this,  apiFourSquareResponse.response.venues.get(0).name, Toast.LENGTH_LONG).show();
         Toast.makeText(this,  String.valueOf(apiFourSquareResponse.response.venues.get(0).location.lat), Toast.LENGTH_LONG).show();
         Toast.makeText(this,  String.valueOf(apiFourSquareResponse.response.venues.get(0).location.lng), Toast.LENGTH_LONG).show();
 
 
-       attachFragment();
+       attachListFragment();
         //attachMapFragment();
     }
 
 
 
-    // Generamos un metodo para agregar (attachar) nuestros Fragmentos
-    public void attachFragment(){
+    // Generamos un metodo para agregar (attachar) nuestros Fragmento Lista
+    public void attachListFragment(){
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment listResultFragment = new ListResultFragment();
+
+        ((ListResultFragment) listResultFragment).setVenues(venues);
 
         fragmentTransaction.replace(R.id.main_container, listResultFragment);  // Aqui es donde colocamos el fragmento
 
@@ -142,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
 
-    // Generamos un metodo para agregar (attachar) nuestros Fragmentos
+    // Generamos un metodo para agregar (attachar) nuestros Fragmento Mapa
     public void attachMapFragment(){
        /// MapsResultsFragment
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -161,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Fragment currentFragment = fragmentManager.findFragmentById(R.id.main_container);
 
         if( currentFragment instanceof  MapsResultsFragment){
-            attachFragment();
+            attachListFragment();
             imageButtonMap.setBackgroundResource(android.R.drawable.btn_default);
 
         }else if ( currentFragment instanceof  ListResultFragment){
@@ -169,7 +178,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             imageButtonMap.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
 
         }
-
 
 
     }
