@@ -38,7 +38,9 @@ public class ListResultFragment extends Fragment {
        View viewRoot =   inflater.inflate(R.layout.fragment_list_result, container, false);
 
         recyclerView =  viewRoot.findViewById(R.id.lista_foursquare);
+
         layoutManager = new LinearLayoutManager(getActivity()); // Inicializamos en linear layout manager
+
         recyclerView.setLayoutManager(layoutManager);
 
 

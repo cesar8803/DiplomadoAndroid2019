@@ -44,6 +44,7 @@ public class ListFourSquareAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         ((MyFourSquareViewHolder) holder).venue_name.setText(venues.get(position).name);
+        ((MyFourSquareViewHolder) holder).venue_city.setText(venues.get(position).location.city); // primer cambio
 
     }
 
@@ -57,11 +58,14 @@ public class ListFourSquareAdapter extends RecyclerView.Adapter {
     public class MyFourSquareViewHolder extends RecyclerView.ViewHolder{
 
         public TextView venue_name;
+        public TextView venue_city; // Tercer  cambio
+
 
         public MyFourSquareViewHolder(View itemView) {
             super(itemView);
 
             venue_name = itemView.findViewById(R.id.venue_name);
+            venue_city = itemView.findViewById(R.id.venue_city);// Cuarto  cambio
 
 
         }
