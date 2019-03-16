@@ -17,5 +17,8 @@
         android:id="@+id/venue_city"/>
     <!-- Segundo Cambio -->
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/venue_distance"/>
 </LinearLayout>

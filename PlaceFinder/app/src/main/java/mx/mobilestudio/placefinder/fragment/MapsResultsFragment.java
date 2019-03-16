@@ -7,12 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import mx.mobilestudio.placefinder.R;
+import mx.mobilestudio.placefinder.model.Venue;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MapsResultsFragment extends Fragment {
+
+
+
+    public ArrayList<Venue> venues;
+
 
 
     public MapsResultsFragment() {
@@ -27,4 +35,12 @@ public class MapsResultsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_maps_results, container, false);
     }
 
+
+    public ArrayList<Venue> getVenues() {
+        return venues;
+    }
+
+    public void setVenues(ArrayList<Venue> venues) {
+        this.venues = venues;
+    }
 }

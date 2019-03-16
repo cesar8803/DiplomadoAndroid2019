@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show();
 
         Gson gson = new Gson();
-
+        // Lo parseamos con GSON
         ApiFourSquareResponse apiFourSquareResponse = gson.fromJson((String) response, ApiFourSquareResponse.class);
 
 
@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void attachListFragment(){
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
         Fragment listResultFragment = new ListResultFragment();
 
         ((ListResultFragment) listResultFragment).setVenues(venues);
