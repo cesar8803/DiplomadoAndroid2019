@@ -13,7 +13,10 @@
         android:id="@+id/toolbar"
         android:elevation="4dp"
         android:theme="@style/Base.ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:backgroundTint="#00BCD4">
+
+        <!-- Se agrega el primer color de fondo-->
 
 
             <RelativeLayout
@@ -25,8 +28,11 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/textoHeader"
                     android:text="PlaceFinder"
-                    android:layout_centerHorizontal="true"
+                    android:textColor="#FAFAFA"
+                    android:layout_centerHorizontal="false"
                     android:textSize="20sp"/>
+
+                <!-- Se cambia el color de la letra -->
 
 
                 <ImageButton
