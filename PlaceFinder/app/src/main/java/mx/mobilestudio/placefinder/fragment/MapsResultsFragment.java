@@ -13,7 +13,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -28,6 +31,7 @@ public class MapsResultsFragment extends Fragment implements OnMapReadyCallback{
 
 
     public ArrayList<Venue> venues;
+    private  GoogleMap googleMap; //Se crea variable para poderla manipular
 
 
     public MapsResultsFragment() {
@@ -68,8 +72,50 @@ public class MapsResultsFragment extends Fragment implements OnMapReadyCallback{
 
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14f); //Nivel de Zoom La variable CamUpdate te posiciona
 
-        googleMap.moveCamera(cameraUpdate);
+        googleMap.moveCamera(cameraUpdate); //enfoca latitud independientemente de donde sea
+
+        this.googleMap = googleMap;
+
+        //Agrego un marcador con mi posición actual
+
+        MarkerOptions MobileStudio = new MarkerOptions();
+
+        MobileStudio.position(latLng);
+        MobileStudio.title("MobileStudio");
+        MobileStudio.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+
+        googleMap.addMarker(MobileStudio); //Se crea marcador
+
+
+        paintFourSquareMarkersinMap();
 
 
     }
+
+    //Pintar la info en el mapa através del siguiente método
+
+    public void paintFourSquareMarkersinMap()
+    {
+
+        for(Venue currentvenue : venues ){
+
+            Double lat = currentvenue.location.lat;
+
+            Double lng = currentvenue.location.lng;
+
+            String name = currentvenue.name;
+
+            LatLng latLng = new LatLng(lat,lng);
+
+            MarkerOptions markerOptions = new MarkerOptions(); //Esta clase representa la configuracion de un marcador
+
+            markerOptions.position(latLng);
+            markerOptions.title(name);
+
+
+            googleMap.addMarker(markerOptions); //Se igualo la variable para ser ocupada aqui, con esto se crean los marcadores
+        }
+
+    }
+
 }

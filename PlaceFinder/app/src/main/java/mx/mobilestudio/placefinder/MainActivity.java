@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                      .appendQueryParameter("client_id","HOSIY11XMXHWFADXIPQTF5HRZA3YIWIFGRAOA5NIGXOY3CWI")
                      .appendQueryParameter("client_secret","OGATJNY0E0JY15PRXYD5MQ2WW3EMFLRAWFHLAOQYSTMVKMHM")
                      .appendQueryParameter("v","20130815")
-                     .appendQueryParameter("ll","19.433997,-99.146006")
+                     .appendQueryParameter("ll","19.395209,-99.1544203")
                      .appendQueryParameter("query",query).build().toString();
 
 
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment listResultFragment = new ListResultFragment();
 
-        ((ListResultFragment) listResultFragment).setVenues(venues);
+        ((ListResultFragment) listResultFragment).setVenues(venues); //Aqui le pasamos la informaciòn a ListResultFragment (Venues) 23032019
 
         fragmentTransaction.replace(R.id.main_container, listResultFragment);  // Aqui es donde colocamos el fragmento
 
@@ -156,6 +156,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
        /// MapsResultsFragment
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment mapsResultsFragment = new MapsResultsFragment();
+
+        ((MapsResultsFragment) mapsResultsFragment).setVenues(venues); //Como en la lista le pasamos los resultados al mapa 23032019
 
         fragmentTransaction.replace(R.id.main_container, mapsResultsFragment);  // Aqui es donde colocamos el fragmento
 
