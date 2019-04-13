@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.InitialSelectionFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textinitialquestion"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/texttypeofpromotion"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/container"
+        android:gravity="center_horizontal"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/container"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/online"
+            android:layout_margin="10dp"
+            android:textSize="14sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Oferta en linea"/>
+
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/physical"
+            android:layout_margin="10dp"
+            android:textSize="14sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Oferta en tienda fisica"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
