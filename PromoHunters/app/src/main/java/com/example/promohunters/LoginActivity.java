@@ -3,6 +3,7 @@ package com.example.promohunters;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -321,6 +322,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //Login Correcto
             showProgress(false);
             Toast.makeText(this, "Log In Correcto", Toast.LENGTH_LONG).show();
+            finish(); //el activity deja de existir al mandar a llamar este método
+
+            Intent intent = new Intent(this, PromoFormActivity.class);
+            startActivity(intent);
 
         } else {
 
