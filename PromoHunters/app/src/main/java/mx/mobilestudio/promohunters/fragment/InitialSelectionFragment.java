@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import mx.mobilestudio.promohunters.R;
+import mx.mobilestudio.promohunters.interfaces.onModeSelection;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,13 +62,6 @@ public class InitialSelectionFragment extends Fragment implements View.OnClickLi
                 break;
         }
 
-    }
-
-
-    //
-    public interface onModeSelection{
-
-        public void onModeSelected(int mode);
     }
 
 
