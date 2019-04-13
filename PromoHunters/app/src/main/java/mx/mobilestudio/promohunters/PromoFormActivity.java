@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import mx.mobilestudio.promohunters.fragment.InitialSelectionFragment;
 import mx.mobilestudio.promohunters.fragment.OnlineFormFragment;
 import mx.mobilestudio.promohunters.interfaces.onModeSelection;
 
