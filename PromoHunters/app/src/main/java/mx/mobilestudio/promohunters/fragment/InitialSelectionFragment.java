@@ -28,7 +28,7 @@ public class InitialSelectionFragment extends Fragment implements View.OnClickLi
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        onModeSelection = (InitialSelectionFragment.onModeSelection) getActivity();
+        onModeSelection = (onModeSelection) getActivity();
     }
 
 
