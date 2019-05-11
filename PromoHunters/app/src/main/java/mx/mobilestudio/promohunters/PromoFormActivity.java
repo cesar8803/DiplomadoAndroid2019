@@ -40,7 +40,7 @@ public class PromoFormActivity extends AppCompatActivity implements onModeSelect
 
                 fragmentTransaction.replace(R.id.main_fragment_container, initialSelectionFragment);
 
-                fragmentTransaction.commit();
+                fragmentTransaction.addToBackStack(null).commit();
                 break;
             case R.id.physical:
 
@@ -51,7 +51,7 @@ public class PromoFormActivity extends AppCompatActivity implements onModeSelect
 
                 fragmentTransaction3.replace(R.id.main_fragment_container, physicalFragment);
 
-                fragmentTransaction3.commit();
+                fragmentTransaction3.addToBackStack(null).commit();
 
                 break;
 

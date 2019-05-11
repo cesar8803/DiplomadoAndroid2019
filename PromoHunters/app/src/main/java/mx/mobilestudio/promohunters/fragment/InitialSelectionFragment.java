@@ -19,6 +19,9 @@ public class InitialSelectionFragment extends Fragment implements View.OnClickLi
 
 
     private onModeSelection onModeSelection;
+    Button onlineButton;
+    Button physicalButton;
+
 
     public InitialSelectionFragment() {
         // Required empty public constructor
