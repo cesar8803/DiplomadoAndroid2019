@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import mx.mobilestudio.promohunters.fragment.InitialSelectionFragment;
 import mx.mobilestudio.promohunters.fragment.OnlineFormFragment;
+import mx.mobilestudio.promohunters.fragment.PhysicalFormFragment;
 import mx.mobilestudio.promohunters.interfaces.onModeSelection;
 
 public class PromoFormActivity extends AppCompatActivity implements onModeSelection {
@@ -42,6 +43,15 @@ public class PromoFormActivity extends AppCompatActivity implements onModeSelect
                 fragmentTransaction.commit();
                 break;
             case R.id.physical:
+
+
+                FragmentTransaction fragmentTransaction3 = fragmentManager.beginTransaction();
+
+                Fragment physicalFragment = new PhysicalFormFragment();
+
+                fragmentTransaction3.replace(R.id.main_fragment_container, physicalFragment);
+
+                fragmentTransaction3.commit();
 
                 break;
 

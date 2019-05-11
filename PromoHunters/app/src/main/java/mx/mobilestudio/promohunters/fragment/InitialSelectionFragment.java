@@ -55,6 +55,8 @@ public class InitialSelectionFragment extends Fragment implements View.OnClickLi
         switch (v.getId()){
 
             case R.id.physical:
+                onModeSelection.onModeSelected(R.id.physical);
+
                 break;
 
             case R.id.online:
