@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import mx.mobilestudio.promohunters.R;
 import mx.mobilestudio.promohunters.interfaces.onModeSelection;
@@ -19,6 +20,8 @@ public class InitialSelectionFragment extends Fragment implements View.OnClickLi
 
 
     private onModeSelection onModeSelection;
+    Button onlineButton;
+    Button physicalButton;
 
     public InitialSelectionFragment() {
         // Required empty public constructor
@@ -38,9 +41,9 @@ public class InitialSelectionFragment extends Fragment implements View.OnClickLi
         // Inflate the layout for this fragment
         View viewRoot =  inflater.inflate(R.layout.fragment_initial_selection, container, false);
 
-        Button onlineButton = viewRoot.findViewById(R.id.online);
+         onlineButton = viewRoot.findViewById(R.id.online);
 
-        Button physicalButton = viewRoot.findViewById(R.id.physical);
+         physicalButton = viewRoot.findViewById(R.id.physical);
 
 
         onlineButton.setOnClickListener(this);
