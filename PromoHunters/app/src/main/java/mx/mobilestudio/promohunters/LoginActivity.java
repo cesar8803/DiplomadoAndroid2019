@@ -342,7 +342,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
              singUpFirebase(email,password);
 
-
+//Esto es un comentario
          }
     }
 

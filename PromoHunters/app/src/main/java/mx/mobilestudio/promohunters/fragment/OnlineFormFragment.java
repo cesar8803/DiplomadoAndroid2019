@@ -3,6 +3,7 @@ package mx.mobilestudio.promohunters.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,12 @@ import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import mx.mobilestudio.promohunters.R;
 import mx.mobilestudio.promohunters.model.Promo;
@@ -19,7 +26,7 @@ import static android.widget.Toast.makeText;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OnlineFormFragment extends Fragment implements View.OnClickListener {
+public class OnlineFormFragment extends Fragment implements View.OnClickListener, OnSuccessListener, OnFailureListener {
 
     Button savePromo;
     EditText editTextTitle;
@@ -27,11 +34,15 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     EditText editTextLink;
     EditText editTextDesc;
 
+    private FirebaseStorage firebaseStorage; // Almacenar archivo, img y videos
+    private DatabaseReference databaseReference; // Se conecta a Realtime db de Firebase
+
     Promo promo;
 
 
     public OnlineFormFragment() {
         // Required empty public constructor
+        databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
 
@@ -119,6 +130,25 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
         promo.setPrice(Float.valueOf(editTextPrice.getText().toString()));
         promo.setLink(editTextLink.getText().toString());
         promo.setDescription(editTextDesc.getText().toString());
+
+        String promoID = databaseReference.push().getKey();
+        databaseReference.child("promo").child(promoID).setValue(promo).addOnSuccessListener(this).addOnFailureListener(this);
+
+    }
+
+    @Override
+    public void onFailure(@NonNull Exception e) {
+
+        Toast.makeText(getActivity(), "Ocurrio un error!! " +e.getStackTrace().toString(), Toast.LENGTH_LONG).show();
+        getActivity().finish(); //Se cierra el formulario
+
+    }
+
+    @Override
+    public void onSuccess(Object o) {
+
+        Toast.makeText(getActivity(), "Se guardó de forma exitosa!! ", Toast.LENGTH_LONG).show();
+        getActivity().finish(); //Se cierra el formulario
 
     }
 }

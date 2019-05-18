@@ -44,5 +44,16 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/main_home_container">
+
+
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -1,6 +1,9 @@
 package mx.mobilestudio.promohunters;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,11 +15,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import mx.mobilestudio.promohunters.fragment.HotPromoFragment;
+
 public class MainActivity extends AppCompatActivity implements OnSuccessListener, View.OnClickListener {
 
     private String token;
     private ImageButton imageButton;
     private FirebaseAuth firebaseAuth;
+    private FragmentManager fragmentManager;
 
 
 
@@ -33,10 +39,14 @@ public class MainActivity extends AppCompatActivity implements OnSuccessListener
         // Inicializamos firebaseAuth que nos sirve para Autenticar a usuarios dentro de nuestra App
 
         firebaseAuth = FirebaseAuth.getInstance();
+        fragmentManager = getSupportFragmentManager();
 
 
         // Inicializamos FirebaseInstanceId que nos sirve para Obtener un Token para las PushNotifications
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this, this );
+
+    attachHotPromoFragment(); //Se adiciona el fragmento
+
     }
 
     @Override
@@ -67,4 +77,20 @@ public class MainActivity extends AppCompatActivity implements OnSuccessListener
 
 
     }
+
+
+    public void attachHotPromoFragment(){
+
+        Fragment hotPromoFragment = new HotPromoFragment();
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.main_home_container,hotPromoFragment);
+
+        fragmentTransaction.commit();
+
+    }
+
+
+
 }
