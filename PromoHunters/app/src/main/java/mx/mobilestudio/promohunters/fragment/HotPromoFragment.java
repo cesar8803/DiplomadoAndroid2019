@@ -84,10 +84,11 @@ public class HotPromoFragment extends Fragment implements ValueEventListener {
         //Termina
 
 
-//Manuel
+
+
     }
 
-
+//Benjamin Claro NIIETOoo haban
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //Cada vez que hay informaciòn nueva nos llega este método sin nosotros solicitarlo, en el orden que se requiera (Fecha, Top, Como llega de la bd)
