@@ -4,6 +4,8 @@ package mx.mobilestudio.promohunters.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +22,15 @@ import java.util.List;
 
 import mx.mobilestudio.promohunters.R;
 import mx.mobilestudio.promohunters.model.Promo;
+import mx.mobilestudio.promohunters.adapter.PromoHunterAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HotPromoFragment extends Fragment implements ValueEventListener {
 
-
+    public RecyclerView recyclerView;
+    public LinearLayoutManager layoutManager;
     public ArrayList<Promo> promoList = new ArrayList<>();
     private DatabaseReference databaseReference;
 
@@ -42,8 +46,20 @@ public class HotPromoFragment extends Fragment implements ValueEventListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_hot_promo, container, false);
+        View viewRoot = inflater.inflate(R.layout.fragment_hot_promo, container, false);
+
+        recyclerView=viewRoot.findViewById(R.id.lista_promohunter);
+
+        layoutManager= new LinearLayoutManager(getActivity());
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        PromoHunterAdapter adapter = new PromoHunterAdapter(promoList);
+
+        recyclerView.setAdapter(adapter);
+
+        return viewRoot;
+
     }
 
     @Override
