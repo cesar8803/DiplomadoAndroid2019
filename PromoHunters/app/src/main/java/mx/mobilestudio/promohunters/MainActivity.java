@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -15,6 +17,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import java.util.ArrayList;
+
+import mx.mobilestudio.promohunters.adapter.PromoHunterAdapter;
 import mx.mobilestudio.promohunters.fragment.HotPromoFragment;
 
 public class MainActivity extends AppCompatActivity implements OnSuccessListener, View.OnClickListener {
@@ -23,8 +28,6 @@ public class MainActivity extends AppCompatActivity implements OnSuccessListener
     private ImageButton imageButton;
     private FirebaseAuth firebaseAuth;
     private FragmentManager fragmentManager;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnSuccessListener
 
     attachHotPromoFragment(); //Se adiciona el fragmento
 
-    }
+       }
 
     @Override
     public void onSuccess(Object o) {

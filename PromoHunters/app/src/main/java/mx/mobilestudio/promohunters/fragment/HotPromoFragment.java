@@ -33,9 +33,10 @@ public class HotPromoFragment extends Fragment implements ValueEventListener {
 
     //public ArrayList<Promo> promos;
     public RecyclerView recyclerView;
-
+    public RecyclerView.Adapter Adapter; //No es usada al momento
     public LinearLayoutManager layoutManager;  // Esta clase calcula cuantas vistas y viewholder caben en la pantalla
 
+    //Variables adicionales a las que necesita la App
     public ArrayList<Promo> promoList = new ArrayList<>();
     private DatabaseReference databaseReference;
 
@@ -57,19 +58,27 @@ public class HotPromoFragment extends Fragment implements ValueEventListener {
 
         //Comienza
 
-        View viewRoot =   inflater.inflate(R.layout.fragment_hot_promo, container, false);
+        View viewRoot =   inflater.inflate(R.layout.fragment_hot_promo, container, false); //1
 
-        recyclerView =  viewRoot.findViewById(R.id.hot_promo);
+        //super.onCreate(savedInstanceState);//2
+        //setContentView(R.layout.my_activity);//2.1
 
+
+        recyclerView =  viewRoot.findViewById(R.id.hot_promo); //una forma
+        //recyclerView = (RecyclerView) findViewById(R.id.hot_promo); //Segunda forma
+
+        //Usa esta configuración para mejorar el performance si no sabes que cambio
+        //El contenido no cambia el tamaño de Layout del RecyclerView
+        recyclerView.setHasFixedSize(true);
+
+        //Usa un Linear Layout Manager
         layoutManager = new LinearLayoutManager(getActivity()); // Inicializamos en linear layout manager
-
         recyclerView.setLayoutManager(layoutManager);
 
 
-        PromoHunterAdapter adapter = new PromoHunterAdapter (promoList);
-
-
-        recyclerView.setAdapter(adapter);
+        //Especifica un adaptador
+        PromoHunterAdapter Adapter = new PromoHunterAdapter (promoList);
+        recyclerView.setAdapter(Adapter);
 
 
         return  viewRoot;
@@ -100,9 +109,9 @@ public class HotPromoFragment extends Fragment implements ValueEventListener {
 
     }
 
-    public ArrayList<Promo> getPromos() { return promoList; } //Pendiente
+    //public ArrayList<Promo> getPromos() { return promoList; } //Pendiente
 
-    public void setPromos(ArrayList<Promo> promoList) {this.promoList = promoList;} //Pendiente
+    //public void setPromos(ArrayList<Promo> promoList) {this.promoList = promoList;} //Pendiente
 
 
 }
