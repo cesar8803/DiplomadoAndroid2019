@@ -2,6 +2,8 @@ package mx.mobilestudio.promohunters.fragment;
 
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -20,6 +23,8 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import mx.mobilestudio.promohunters.R;
 import mx.mobilestudio.promohunters.model.Promo;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +37,9 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     EditText editTextPrice;
     EditText editTextLink;
     EditText editTextDesc;
+    ImageButton imagePromoButton;
+
+    private Uri selectImage;
 
     private FirebaseStorage firebaseStorage;// Almacenar archivos, imagenes, videos
     private DatabaseReference databaseReference; // Para conectarse con realtime database de firebase
@@ -49,6 +57,21 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case 100:
+                if(resultCode == RESULT_OK){
+
+                    selectImage = data.getData();
+                    Toast.makeText(getActivity(), "Image selected!!  "+selectImage.getLastPathSegment(),Toast.LENGTH_SHORT).show();
+
+                }
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,6 +87,9 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
         editTextLink = viewRoot.findViewById(R.id.link);
         editTextDesc = viewRoot.findViewById(R.id.description);
 
+        imagePromoButton = viewRoot.findViewById(R.id.imagePromoButton);
+        imagePromoButton.setOnClickListener(this);
+        imagePromoButton.setImageResource(R.drawable.common_full_open_on_phone);
 
         buttonSavePromo.setOnClickListener(this);
 
@@ -73,20 +99,33 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
+        switch (v.getId()){
 
-        String validateResult = validateForm();
+            case R.id.imagePromoButton:
+                selectImage();
 
-        if(validateResult.isEmpty()){
+                break;
 
-            Toast.makeText(getActivity(),"Los datos son validos!! ",Toast.LENGTH_LONG).show();
+            case R.id.addNewPromo:
+
+                String validateResult = validateForm();
+
+                if(validateResult.isEmpty()){
+
+                    Toast.makeText(getActivity(),"Los datos son validos!! ",Toast.LENGTH_LONG).show();
 
 
-            createNewPromo();
+                    createNewPromo();
 
-        }else{
-            Toast.makeText(getActivity(),validateResult,Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getActivity(),validateResult,Toast.LENGTH_LONG).show();
 
+                }
+
+                break;
         }
+
+
 
 
     }
@@ -152,4 +191,14 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
 
 
     }
+
+
+    public void selectImage(){
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent,100);//Metodo que inicia una Acivity Externa pero espera un resultado
+
+    }
+
+
 }
