@@ -42,7 +42,7 @@ public class PromoHunterAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         ((MyPromoHunterViewHolder) holder).title.setText(promos.get(position).title);
-        ((MyPromoHunterViewHolder) holder).price.setText(promos.get(position).precio);
+        ((MyPromoHunterViewHolder) holder).price.setText(String.valueOf(promos.get(position).price));
         ((MyPromoHunterViewHolder) holder).link.setText(promos.get(position).link);
         ((MyPromoHunterViewHolder) holder).description.setText(promos.get(position).description);
 
@@ -66,7 +66,7 @@ public class PromoHunterAdapter extends RecyclerView.Adapter {
             super(itemView);
 
             title = itemView.findViewById(R.id.title);
-            price = itemView.findViewById(R.id.price);
+            price = itemView.findViewById(R.id.precio);
             link = itemView.findViewById(R.id.link);
             description=itemView.findViewById(R.id.description);
 

@@ -2,10 +2,10 @@ package mx.mobilestudio.promohunters.model;
 
 public class Promo {
 
-    private String title;
-    private Float price;
-    private String link;
-    private String description;
+    public String title;
+    public Float price;
+    public String link;
+    public String description;
 
     public String getTitle() {
         return title;

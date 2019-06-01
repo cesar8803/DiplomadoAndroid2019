@@ -54,9 +54,7 @@ public class HotPromoFragment extends Fragment implements ValueEventListener {
 
         recyclerView.setLayoutManager(layoutManager);
 
-        PromoHunterAdapter adapter = new PromoHunterAdapter(promoList);
 
-        recyclerView.setAdapter(adapter);
 
         return viewRoot;
 
@@ -65,6 +63,7 @@ public class HotPromoFragment extends Fragment implements ValueEventListener {
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         // Cada vez que hay informacion nueva nos llega a este metodo sin nosotros solicitarlo
+        promoList.clear();
 
         for(DataSnapshot child : dataSnapshot.getChildren()){
 
@@ -75,7 +74,9 @@ public class HotPromoFragment extends Fragment implements ValueEventListener {
             Toast.makeText(getActivity(),promo.getTitle(),Toast.LENGTH_LONG).show();
         }
 
+        PromoHunterAdapter adapter = new PromoHunterAdapter(promoList);
 
+        recyclerView.setAdapter(adapter);
 
 
     }
