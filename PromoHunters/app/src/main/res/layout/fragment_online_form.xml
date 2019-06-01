@@ -78,6 +78,19 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+
+            android:id="@+id/imagePromoButton"
+            android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
     </LinearLayout>
 
         <Button

@@ -33,7 +33,6 @@ public class HotPromoFragment extends Fragment implements ValueEventListener {
 
     //public ArrayList<Promo> promos;
     public RecyclerView recyclerView;
-    public RecyclerView.Adapter Adapter; //No es usada al momento
     public LinearLayoutManager layoutManager;  // Esta clase calcula cuantas vistas y viewholder caben en la pantalla
 
     //Variables adicionales a las que necesita la App
@@ -56,8 +55,6 @@ public class HotPromoFragment extends Fragment implements ValueEventListener {
         // Inflate the layout for this fragment
         // se elimina return inflater.inflate(R.layout.fragment_hot_promo, container, false);
 
-        //Comienza
-
         View viewRoot =   inflater.inflate(R.layout.fragment_hot_promo, container, false); //1
 
         //super.onCreate(savedInstanceState);//2
@@ -76,22 +73,15 @@ public class HotPromoFragment extends Fragment implements ValueEventListener {
         recyclerView.setLayoutManager(layoutManager);
 
 
-
-
-
         return  viewRoot;
-
-        //Termina
-
-
 
 
     }
 
-//Benjamin Claro NIIETOoo haban
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //Cada vez que hay informaciòn nueva nos llega este método sin nosotros solicitarlo, en el orden que se requiera (Fecha, Top, Como llega de la bd)
+promoList.clear();
 
         for(DataSnapshot child : dataSnapshot.getChildren()){
 
@@ -112,10 +102,6 @@ public class HotPromoFragment extends Fragment implements ValueEventListener {
     public void onCancelled(@NonNull DatabaseError databaseError) {
 
     }
-
-    //public ArrayList<Promo> getPromos() { return promoList; } //Pendiente
-
-    //public void setPromos(ArrayList<Promo> promoList) {this.promoList = promoList;} //Pendiente
 
 
 }

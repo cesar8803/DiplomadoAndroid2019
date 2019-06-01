@@ -13,6 +13,7 @@ import mx.mobilestudio.promohunters.R;
 import mx.mobilestudio.promohunters.model.Promo;
 
 
+
 public class PromoHunterAdapter extends RecyclerView.Adapter {
 
     ArrayList<Promo> promos;
@@ -33,8 +34,6 @@ public class PromoHunterAdapter extends RecyclerView.Adapter {
 
         // El viewholder guarda las referencias a los datos dinamicos, estos son los que van cambiando de celda en celda con respecto a la posición
 
-        //porsi MyPromoHunterViewHolder viewHolder = new MyPromoHunterViewHolder(view);
-
 
         return new ViewHolder(view);
     }
@@ -48,8 +47,6 @@ public class PromoHunterAdapter extends RecyclerView.Adapter {
         ((ViewHolder) holder).price.setText(String.valueOf(promos.get(i).getPrice()));
         ((ViewHolder) holder).title.setText(promos.get(i).getTitle());
 
-
-
         }
 
     @Override
@@ -57,24 +54,8 @@ public class PromoHunterAdapter extends RecyclerView.Adapter {
         return promos.size();
     }
 
-    /*public class MyPromoHunterViewHolder extends RecyclerView.ViewHolder{
 
 
-
-
-        public MyPromoHunterViewHolder(View itemView) {
-            super(itemView);
-
-            description = itemView.findViewById(R.id.description);
-            link = itemView.findViewById(R.id.link);// Cuarto  cambio
-            price = itemView.findViewById(R.id.price);
-            title = itemView.findViewById(R.id.title);
-
-
-        }
-    }
-*/
-//Dif
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView dato;
@@ -93,7 +74,6 @@ public class PromoHunterAdapter extends RecyclerView.Adapter {
         link = itemView.findViewById(R.id.link);
         price = itemView.findViewById(R.id.price);
         title = itemView.findViewById(R.id.title);
-
 
 
     }
