@@ -88,7 +88,11 @@ public class PromoHunterAdapter extends RecyclerView.Adapter {
 
         super(itemView);
 
-        dato= itemView.findViewById(R.id.description);
+        //Crucial
+        description = itemView.findViewById(R.id.description);
+        link = itemView.findViewById(R.id.link);
+        price = itemView.findViewById(R.id.price);
+        title = itemView.findViewById(R.id.title);
 
 
 
