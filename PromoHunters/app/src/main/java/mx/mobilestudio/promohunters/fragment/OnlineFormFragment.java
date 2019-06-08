@@ -130,7 +130,6 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
                     if(selectImage != null){
                         uploadImage();
                     }
-                    //createNewPromo();
 
                 }else{
                     Toast.makeText(getActivity(),validateResult,Toast.LENGTH_LONG).show();
@@ -175,7 +174,7 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     }
 
 
-    public void createNewPromo(){
+    public void createNewPromo(String imageURL){
 
         promo = new Promo();
 
@@ -183,7 +182,7 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
         promo.setPrice(Float.valueOf(editTextPrice.getText().toString()));
         promo.setLink(editTextLink.getText().toString());
         promo.setDescription(editTextDesc.getText().toString());
-        promo.setImageLink("url a obtener");
+        promo.setImageLink(imageURL);
 
 
         String promoID = databaseReference.push().getKey();
@@ -239,6 +238,20 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
                 progressDialog.dismiss();
                 Toast.makeText(getActivity(),"Upload de imagen correcto!!",Toast.LENGTH_SHORT).show();
 
+                //Extraer la URL de la imagen
+
+                taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Toast.makeText(getActivity(), "URL"+uri.toString(),Toast.LENGTH_SHORT).show();
+
+                        createNewPromo(uri.toString());//Crea la promo en la base de datos de firebase ya con la URL de la imagen
+
+                        Picasso.with(getActivity()).load(uri.toString()).into(imagePromoButton);
+
+                    }
+                });
+
 
             }
         });
@@ -255,7 +268,7 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     public void onSuccess(Object o) {
 
         Toast.makeText(getActivity(), "Se guardo de forma exitosa!! ", Toast.LENGTH_LONG).show();
-        getActivity().finish();
+        //getActivity().finish();
 
     }
 
