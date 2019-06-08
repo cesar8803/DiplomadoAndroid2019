@@ -89,6 +89,11 @@
             android:id="@+id/imagePromoButton"
             android:layout_centerHorizontal="true"/>
 
+            <ImageView
+                android:id="@+id/IVInternet"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+
         </RelativeLayout>
 
     </LinearLayout>

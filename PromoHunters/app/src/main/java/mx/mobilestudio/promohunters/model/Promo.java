@@ -7,6 +7,16 @@ public class Promo {
     private String link;
     private String description;
 
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
+
+    private String imageLink;
+
     public String getTitle() {
         return title;
     }

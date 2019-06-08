@@ -2,6 +2,7 @@ package mx.mobilestudio.promohunters.fragment;
 
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,9 +18,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import mx.mobilestudio.promohunters.R;
 import mx.mobilestudio.promohunters.model.Promo;
@@ -38,7 +44,13 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     EditText editTextLink;
     EditText editTextDesc;
 
+
     ImageButton imagePromoButton;
+    StorageReference storageReference; // jala referencia al directorio raiz
+    StorageReference imageReference; // Será una referencia al directorio y archivo de la imagen a subir
+    ProgressDialog progressDialog;
+    UploadTask uploadTask;
+
     private Uri selectImage;
 
 
@@ -51,6 +63,8 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     public OnlineFormFragment() {
         // Required empty public constructor
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
     }
 
     @Override
@@ -118,7 +132,15 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
 
                     Toast.makeText(getActivity(), "Los datos son válidos", Toast.LENGTH_LONG).show();
 
-                    createNewPromo();
+
+                    if(selectImage !=null){
+
+                        uploadImage();
+                        //createNewPromo(); //Si lo corro, no utiliza el mètodo de subida
+
+                    }
+
+
 
                 } else {
 
@@ -170,7 +192,7 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
         return validateString;
     }
 
-    public void createNewPromo(){
+    public void createNewPromo(String imageURL){
 
         promo = new Promo();
 
@@ -178,11 +200,83 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
         promo.setPrice(Float.valueOf(editTextPrice.getText().toString()));
         promo.setLink(editTextLink.getText().toString());
         promo.setDescription(editTextDesc.getText().toString());
+        promo.setImageLink(imageURL);
 
         String promoID = databaseReference.push().getKey();
         databaseReference.child("promo").child(promoID).setValue(promo).addOnSuccessListener(this).addOnFailureListener(this);
 
     }
+
+    //Método encargado de subir la imagen a Firebase (Cloud Storage)
+
+    public void uploadImage(){
+
+        imageReference = storageReference.child("images/"+selectImage.getLastPathSegment());
+        //Se le da el contexto
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMax(100);
+        progressDialog.setMessage("Subiendo imagen...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL); //Barra de progreso
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+
+        //Iniciamos la subida del archivo (remota / local)
+
+        uploadTask = imageReference.putFile(selectImage);
+
+        //Implementamos a traves de una clase anónima el OnProgressListener en lugar de implementar las interfases de una clase
+        uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                progressDialog.incrementProgressBy((int) progress); //Formula para visualizar el avance
+
+            }
+        }); //Estado para monitorear el progreso
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Toast.makeText(getActivity(), "Error al subir imagen", Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();//Quita la barrita de avance, cuando detecta un error
+
+
+            }
+        });
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                Task<Uri> downloadURL = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(),"Upload de imagen correcto", Toast.LENGTH_SHORT).show();
+
+
+
+
+
+                //Extraer la URL de la imagen
+
+                taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Toast.makeText(getActivity(), "URL"+uri.toString(),Toast.LENGTH_SHORT).show();
+
+                        //Crea la promo en la bd de Firebase ya con la URL de la imagen
+                        createNewPromo(uri.toString());
+
+                        Picasso.with(getActivity()).load(uri.toString()).into(imagePromoButton);
+
+                    }
+                });
+
+            }
+        });
+
+
+    }
+
 
     @Override
     public void onFailure(@NonNull Exception e) {
@@ -196,7 +290,9 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     public void onSuccess(Object o) {
 
         Toast.makeText(getActivity(), "Se guardó de forma exitosa!! ", Toast.LENGTH_LONG).show();
-        getActivity().finish(); //Se cierra el formulario
+        //getActivity().finish(); //Se cierra el formulario
+
+
 
     }
 
