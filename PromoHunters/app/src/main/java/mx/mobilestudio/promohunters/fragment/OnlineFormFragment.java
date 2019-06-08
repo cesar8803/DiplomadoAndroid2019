@@ -18,10 +18,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import mx.mobilestudio.promohunters.R;
 import mx.mobilestudio.promohunters.model.Promo;
@@ -40,8 +43,11 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     EditText editTextLink;
     EditText editTextDesc;
     ImageButton imagePromoButton;
-    StorageReference storageReference;
+    StorageReference storageReference; // jala referencia al directorio remoto raiz /
+    StorageReference imageReference;// Sera una  referencia al directorio y archivo de la imagen a subir
+
     ProgressDialog progressDialog;
+    UploadTask uploadTask;
 
     private Uri selectImage;
 
@@ -59,6 +65,8 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     public OnlineFormFragment() {
         // Required empty public constructor
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference=firebaseStorage.getReference();
     }
 
     @Override
@@ -119,7 +127,10 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
                     Toast.makeText(getActivity(),"Los datos son validos!! ",Toast.LENGTH_LONG).show();
 
 
-                    createNewPromo();
+                    if(selectImage != null){
+                        uploadImage();
+                    }
+                    //createNewPromo();
 
                 }else{
                     Toast.makeText(getActivity(),validateResult,Toast.LENGTH_LONG).show();
@@ -185,13 +196,53 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     //Este es el metodo encargado de subir la imagen a Firebase (Cloud Storage)
 
     public void uploadImage(){
-        storageReference = storageReference.child("images/"+selectImage.getLastPathSegment());
+        imageReference = storageReference.child("images/"+selectImage.getLastPathSegment());
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMax(100);
         progressDialog.setMessage("Subiendo imagen...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.show();
         progressDialog.setCancelable(false);
+
+
+        //Iniciamos la subida del archivo ( remota  / local )
+
+        uploadTask = imageReference.putFile(selectImage);
+
+        // Implementamos a travez de una clase anonima el OnProgressListener
+        uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                progressDialog.incrementProgressBy((int) progress);
+
+
+            }
+        });
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Toast.makeText(getActivity(),"Error al subir imagen!!",Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
+
+            }
+        });
+
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                Task<Uri> downloadURL = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(),"Upload de imagen correcto!!",Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
 
 
 
