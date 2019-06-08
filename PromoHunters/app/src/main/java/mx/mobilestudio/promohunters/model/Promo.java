@@ -2,10 +2,22 @@ package mx.mobilestudio.promohunters.model;
 
 public class Promo {
 
-    public String title;
-    public Float price;
-    public String link;
-    public String description;
+    private String title;
+    private Float price;
+    private String link;
+    private String description;
+    private String imageLink;
+
+
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
+
 
     public String getTitle() {
         return title;
@@ -38,4 +50,6 @@ public class Promo {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 }

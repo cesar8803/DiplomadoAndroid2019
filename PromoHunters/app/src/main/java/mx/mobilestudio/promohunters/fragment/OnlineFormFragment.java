@@ -2,6 +2,7 @@ package mx.mobilestudio.promohunters.fragment;
 
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import mx.mobilestudio.promohunters.R;
 import mx.mobilestudio.promohunters.model.Promo;
@@ -38,6 +40,8 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     EditText editTextLink;
     EditText editTextDesc;
     ImageButton imagePromoButton;
+    StorageReference storageReference;
+    ProgressDialog progressDialog;
 
     private Uri selectImage;
 
@@ -168,10 +172,30 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
         promo.setPrice(Float.valueOf(editTextPrice.getText().toString()));
         promo.setLink(editTextLink.getText().toString());
         promo.setDescription(editTextDesc.getText().toString());
+        promo.setImageLink("url a obtener");
 
 
         String promoID = databaseReference.push().getKey();
         databaseReference.child("promos").child(promoID).setValue(promo).addOnSuccessListener(this).addOnFailureListener(this);
+
+    }
+
+
+
+    //Este es el metodo encargado de subir la imagen a Firebase (Cloud Storage)
+
+    public void uploadImage(){
+        storageReference = storageReference.child("images/"+selectImage.getLastPathSegment());
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMax(100);
+        progressDialog.setMessage("Subiendo imagen...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+
+
+
+
 
     }
 
