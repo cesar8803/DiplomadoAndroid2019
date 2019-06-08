@@ -10,12 +10,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,11 @@ public class MainActivity extends AppCompatActivity implements OnSuccessListener
     private ImageButton imageButton;
     private FirebaseAuth firebaseAuth;
     private FragmentManager fragmentManager;
+    private static final String URL_INTERNET = "https://images.app.goo.gl/LXfLDKHnmB3xS71u5";
+    private static final String URL_INTERNET_PICASO =  "http://i.imgur.com/DvpvklR.png";
+
+    private ImageView activityMainIvLoadInternet;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,10 @@ public class MainActivity extends AppCompatActivity implements OnSuccessListener
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this, this );
 
     attachHotPromoFragment(); //Se adiciona el fragmento
+
+        setUpView();
+
+        loadImageByInternetUrlWithPicasso();
 
        }
 
@@ -91,6 +102,20 @@ public class MainActivity extends AppCompatActivity implements OnSuccessListener
         fragmentTransaction.replace(R.id.main_home_container,hotPromoFragment);
 
         fragmentTransaction.commit();
+
+    }
+
+    private void setUpView(){
+        activityMainIvLoadInternet = findViewById(R.id.IVInternet);
+
+    }
+
+    private void loadImageByInternetUrlWithPicasso(){
+        Picasso.get()
+                .load(URL_INTERNET)
+                .into(activityMainIvLoadInternet);
+
+
 
     }
 
