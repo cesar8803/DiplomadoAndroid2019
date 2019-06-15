@@ -6,6 +6,8 @@ public class Promo {
     private Float price;
     private String link;
     private String description;
+    public String latitude;
+    public String longitud;
 
     public String getImageLink() {
         return imageLink;
@@ -47,5 +49,21 @@ public class Promo {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
     }
 }

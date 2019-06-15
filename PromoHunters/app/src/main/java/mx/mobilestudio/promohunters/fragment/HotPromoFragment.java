@@ -88,7 +88,7 @@ promoList.clear();
             Promo promo = child.getValue(Promo.class);
             promoList.add(promo); //Se van almacenar todas las promos que tengamos.
 
-            Toast.makeText(getActivity(),promo.getTitle(),Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(),promo.getTitle(),Toast.LENGTH_LONG).show();
         }
 
 
