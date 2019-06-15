@@ -290,7 +290,7 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     public void onSuccess(Object o) {
 
         Toast.makeText(getActivity(), "Se guardó de forma exitosa!! ", Toast.LENGTH_LONG).show();
-        //getActivity().finish(); //Se cierra el formulario
+        getActivity().finish(); //Se cierra el formulario
 
 
 
