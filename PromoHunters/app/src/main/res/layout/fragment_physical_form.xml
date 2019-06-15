@@ -1,14 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.PhysicalFormFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:id="@+id/form_container"
+        android:orientation="vertical">
 
-</FrameLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/container_title"
+            android:layout_margin="15dp">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/title"
+                android:hint="Titulo"
+                android:maxLines="1"
+                android:inputType="textPersonName"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/container_precio"
+            android:layout_margin="15dp">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/precio"
+                android:hint="Precio"
+                android:maxLines="1"
+                android:inputType="numberDecimal"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/container_link"
+            android:layout_margin="15dp">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/link"
+                android:hint="Link"
+                android:maxLines="1"
+                android:inputType="textWebEmailAddress"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/container_description"
+            android:layout_margin="15dp">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/description"
+                android:hint="Descripción"
+                android:lines="5"
+                android:maxLines="7"
+                android:inputType="textMultiLine"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/imagePromoButton"
+                android:layout_centerHorizontal="true"/>
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Enviar Promo"
+        android:id="@+id/addNewPromo"
+        android:layout_below="@+id/form_container"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

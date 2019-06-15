@@ -25,6 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import mx.mobilestudio.promohunters.R;
 import mx.mobilestudio.promohunters.model.Promo;
@@ -268,7 +269,7 @@ public class OnlineFormFragment extends Fragment implements View.OnClickListener
     public void onSuccess(Object o) {
 
         Toast.makeText(getActivity(), "Se guardo de forma exitosa!! ", Toast.LENGTH_LONG).show();
-        //getActivity().finish();
+        getActivity().finish();
 
     }
 

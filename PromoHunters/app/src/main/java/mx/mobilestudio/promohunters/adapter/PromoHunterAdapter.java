@@ -5,7 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,10 +44,25 @@ public class PromoHunterAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
+        //Este metodo se encarga de llenar los valores en el view holder para una posición en especifico.
+
         ((MyPromoHunterViewHolder) holder).title.setText(promos.get(position).title);
         ((MyPromoHunterViewHolder) holder).price.setText(String.valueOf(promos.get(position).price));
         ((MyPromoHunterViewHolder) holder).link.setText(promos.get(position).link);
         ((MyPromoHunterViewHolder) holder).description.setText(promos.get(position).description);
+
+        String imageLink = promos.get(position).getImageLink();
+
+        ImageView currentImageView =  ((MyPromoHunterViewHolder) holder).imagen;
+
+
+
+        if(imageLink!=null && !imageLink.isEmpty()){
+
+            Picasso.with(currentImageView.getContext()).load(imageLink).into(currentImageView);
+        }else{
+            currentImageView.setImageResource(android.R.drawable.ic_menu_camera);
+        }
 
     }
 
@@ -60,6 +78,7 @@ public class PromoHunterAdapter extends RecyclerView.Adapter {
         public TextView price;
         public TextView link;
         public TextView description;
+        public ImageView imagen;
 
 
         public MyPromoHunterViewHolder(View itemView) {
@@ -69,6 +88,7 @@ public class PromoHunterAdapter extends RecyclerView.Adapter {
             price = itemView.findViewById(R.id.precio);
             link = itemView.findViewById(R.id.link);
             description=itemView.findViewById(R.id.description);
+            imagen = itemView.findViewById(R.id.imagePromo);
 
 
         }
