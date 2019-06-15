@@ -7,6 +7,8 @@ public class Promo {
     public String link;
     public String description;
     public String imageLink;
+    public String latitude;
+    public String longitud;
 
 
 
@@ -51,5 +53,19 @@ public class Promo {
         this.description = description;
     }
 
+    public String getLatitude() {
+        return latitude;
+    }
 
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
+    }
 }

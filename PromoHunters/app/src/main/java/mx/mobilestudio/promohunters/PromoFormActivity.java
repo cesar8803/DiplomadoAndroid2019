@@ -11,6 +11,7 @@ import mx.mobilestudio.promohunters.fragment.InitialSelectionFragment;
 import mx.mobilestudio.promohunters.fragment.OnlineFormFragment;
 import mx.mobilestudio.promohunters.fragment.PhysicalFormFragment;
 import mx.mobilestudio.promohunters.interfaces.onModeSelection;
+import mx.mobilestudio.promohunters.util.LocationHandler;
 
 public class PromoFormActivity extends AppCompatActivity implements onModeSelection {
 
@@ -18,11 +19,16 @@ public class PromoFormActivity extends AppCompatActivity implements onModeSelect
     private FragmentManager fragmentManager;
     private final   int  INITAL_DECISION=1;
 
+    private LocationHandler locationHandler;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promo_form);
+
+        locationHandler = new LocationHandler(this);
 
         fragmentManager = getFragmentManager();
 
@@ -50,6 +56,8 @@ public class PromoFormActivity extends AppCompatActivity implements onModeSelect
                 FragmentTransaction fragmentTransaction3 = fragmentManager.beginTransaction();
 
                 Fragment physicalFragment = new PhysicalFormFragment();
+
+                ((PhysicalFormFragment) physicalFragment).setLocationHandler(locationHandler);
 
                 fragmentTransaction3.replace(R.id.main_fragment_container, physicalFragment);
 

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import mx.mobilestudio.promohunters.R;
 import mx.mobilestudio.promohunters.model.Promo;
+import mx.mobilestudio.promohunters.util.LocationHandler;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -54,6 +56,8 @@ public class PhysicalFormFragment extends Fragment implements View.OnClickListen
     private FirebaseStorage firebaseStorage;// Almacenar archivos, imagenes, videos
     private DatabaseReference databaseReference; // Para conectarse con realtime database de firebase
 
+    private LocationHandler locationHandler;
+
     Promo promo;
 
 
@@ -63,6 +67,7 @@ public class PhysicalFormFragment extends Fragment implements View.OnClickListen
         databaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference=firebaseStorage.getReference();
+
     }
 
 
@@ -85,6 +90,12 @@ public class PhysicalFormFragment extends Fragment implements View.OnClickListen
         imagePromoButton.setImageResource(R.drawable.common_full_open_on_phone);
 
         buttonSavePromo.setOnClickListener(this);
+
+
+        // Hacemos un Toast con la latitud y longitud
+
+        Toast.makeText(getActivity(), "LAT "+locationHandler.lastLatitude + " LNG "+locationHandler.lastLongitud, Toast.LENGTH_LONG  ).show();
+
 
         return viewRoot;
     }
@@ -178,6 +189,8 @@ public class PhysicalFormFragment extends Fragment implements View.OnClickListen
         promo.setPrice(Float.valueOf(editTextPrice.getText().toString()));
         promo.setLink(editTextLink.getText().toString());
         promo.setDescription(editTextDesc.getText().toString());
+        promo.setLatitude(locationHandler.lastLatitude);
+        promo.setLongitud(locationHandler.lastLongitud);
         promo.setImageLink(imageURL);
 
 
@@ -282,6 +295,14 @@ public class PhysicalFormFragment extends Fragment implements View.OnClickListen
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent,100);//Metodo que inicia una Acivity Externa pero espera un resultado
 
+    }
+
+    public LocationHandler getLocationHandler() {
+        return locationHandler;
+    }
+
+    public void setLocationHandler(LocationHandler locationHandler) {
+        this.locationHandler = locationHandler;
     }
 
 
